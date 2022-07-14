@@ -1,7 +1,7 @@
 {% extends 'myapp/base.html' %}
 {% block body_block %}
     {% if top_list %}
-        <h2>List of Courses</h2>
+        <h2><a href={% url 'myapp:index' %}> List of Topics </a></h2>
         <ol>
             {% for top in top_list %}
                 <li><a href={% url 'myapp:index' %}{{ top.id }}> {{ top.name }}</a></li>
@@ -10,5 +10,6 @@
     {% else %}
         <strong>There are no available topics!</strong>
     {% endif %}
+    <p><a href={% url 'myapp:index' %}{{ 'courses' }}>Course page</a></p>
     <p><a href={% url 'myapp:index' %}{{ 'about' }}>About page</a></p>
 {% endblock %}
