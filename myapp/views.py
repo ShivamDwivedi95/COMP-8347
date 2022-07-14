@@ -31,13 +31,11 @@ def index(request):
     #     response.write(para)
     # return response
 
-
 def about(request):
     # response = HttpResponse()
     # heading3 = '<p>' + 'This is an E-learning Website! Search our Topics to find all available Courses.' + '</p>'
     # response.write(heading3)
     return render(request, 'myapp/about.html')
-
 
 def detail(request, top_no):
     from .models import Course
@@ -60,3 +58,56 @@ def detail(request, top_no):
     # else:
     #     response.write(data)
     # return response
+
+def courses(request):
+    from .models import Course
+    courlist = Course.objects.all().order_by('id')
+    return render(request, 'myapp/courses.html', {'courlist': courlist})
+
+def place_order(request):
+    from .models import Course
+    from .forms import OrderForm
+    msg = ''
+    courlist = Course.objects.all()
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            if order.levels <= order.course.stages:
+                order.save()
+                msg = 'Your course has been ordered successfully.'
+                if order.course.price>=150:
+                    print(order.course.price)
+                    order.course.discount()
+                    print(order.course.price)
+                    order.course.save()
+            else:
+                msg = 'You exceeded the number of levels for this course.'
+            return render(request, 'myapp/order_response.html', {'msg': msg})
+        else:
+            form = OrderForm()
+        return render(request, 'myapp/placeorder.html', {'form':form, 'msg':msg, 'courlist':courlist})
+
+def coursedetail(request, cour_id):
+    from django.shortcuts import redirect
+    from .models import Course
+    from .forms import InterestForm
+    msg = ''
+    cour = Course.objects.filter(id=cour_id).get()
+    if request.method == 'POST':
+        form = InterestForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['interested'] == '1':
+                msg = 'Your interest has been recorded.'
+                print(cour.interested)
+                cour.interested += 1
+                cour.save()
+                print(cour.interested)
+            else:
+                msg = 'You are not interested, got it'
+            print(msg)
+            return redirect('../../myapp/')
+    else:
+        form = InterestForm()
+    return render(request, 'myapp/coursedetail.html', {'form': form, 'cour': cour})
+
