@@ -10,10 +10,16 @@ class InterestForm(forms.Form):
     comments = forms.CharField(widget=forms.Textarea)
 
 class OrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = ('course', 'student', 'levels', 'order_date')
-        widgets = {
-            'student': forms.RadioSelect,
-            'order_date': forms.SelectDateWidget
-        }
+        class Meta:
+            model = Order
+            fields = ('course', 'student', 'levels', 'order_date')
+            widgets = {
+                'student': forms.RadioSelect,
+                'order_date': forms.SelectDateWidget
+            }
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True, widget=forms.PasswordInput)
+
+

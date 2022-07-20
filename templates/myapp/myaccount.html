@@ -1,0 +1,37 @@
+
+{% extends 'myapp/base.html' %}
+{% block body_block %}
+<p>
+    {{ msg }}
+</p>
+    {% if user_is_student == True %}
+    <ul>
+        <li>
+            {{ user.first_name }} {{ user.last_name }}
+        </li>
+    <br>
+        <li>
+            Orders -
+            <ol>
+                {% for item in orders %}
+                <li>
+                    {{ item }}
+                </li>
+                {% endfor %}
+            </ol>
+        </li>
+<br>
+        <li>
+            Topics Interested In -
+            <ol>
+                {% for item in interested_in_topics %}
+                <li>
+                    {{ item }}
+                </li>
+                {% endfor %}
+            </ol>
+        </li>
+    </ul>
+    {% endif %}
+{#    <li class="hbar1"><a href="{% url 'myapp:index' %}place_order">Click here to place order</a><br /></li>#}
+{% endblock %}

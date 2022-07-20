@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}" />
     <title>E-Learning WebApp - {% block title %}Welcome!{% endblock %}</title>
 </head>
+
 <body>
-<div>
-    <h1>{% block myhdg %}Hello Group 2 {% endblock %}</h1>
-    {% block body_block %}*** {% endblock %}
-</div>
-<hr/>
-{#<p><a href={% url 'myapp:index' %}{{ 'courses' }}>Course page</a></p>#}
-<p><a href={% url 'myapp:index' %}> Go Back to the Main Page </a></p>
+    <div>
+        <h1><b>{% block myhdg %}Hello Group 2 {% endblock %}</b></h1>
+        {% block body_block %}*** {% endblock %}
+    </div>
+    <hr />
+    <div>
+        <ul>
+            <li class="hbar1"><a href="/myapp/about/">About Page</a><br /></li>
+            <br />
+            <li class="hbar1"><a href="{% url 'myapp:index' %}">Return to main page</a><br /></li>
+            <br />
+            <li class="hbar1"><a href="/myapp/courses/">Courses Page</a><br /></li>
+        </ul>
+    </div>
 </body>
+
 </html>
